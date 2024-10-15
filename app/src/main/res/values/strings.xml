@@ -42,4 +42,17 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="loginUserInputHint">Usuario</string>
+    <string name="loginPasswordInputHint">Contraseña</string>
+    <string name="loginButtonText">Iniciar Sesión</string>
+    <string name="loginRegisterLauncher">¿Todavía no estás registrado?</string>
+    <string name="mainMessage">Hola Mundo!</string>
+    <string name="welcomeText">Nuevo Texto</string>
+    <string name="registerEmailInput">Correo electrónico</string>
+    <string name="registerLayoutTittle">Crear una cuenta</string>
+    <string name="registerSubText">El usuario y la contraseña que elijas servirá para acceder a los servicios de la aplicación.</string>
+    <string name="registerInputHint">Tu email de usuario</string>
+    <string name="registerPasswordInputHint">Crea tu contraseña</string>
+    <string name="registerConfirmPasswordInputHint">Confirma tu contraseña</string>
+    <string name="registerButtonTxt">Crear cuenta</string>
 </resources>

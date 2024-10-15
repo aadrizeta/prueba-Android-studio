@@ -8,52 +8,162 @@
     tools:context=".Register">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginGlH1"
+        android:id="@+id/registerGlH1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1"
-        />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginGlV1"
+        android:id="@+id/registerGlV1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginGlV2"
+        android:id="@+id/registerGlV2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90"
-        />
+        app:layout_constraintGuide_percent="0.9" />
 
     <TextView
+        android:id="@+id/regisMainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/monsteroffantasy"
-        android:text="Registro"
-        android:textSize="40dp"
+        android:text="@string/registerLayoutTittle"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/loginGlH1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toTopOf="@+id/registerGlH1"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/regSubText"
+        android:layout_width="328dp"
+        android:layout_height="37dp"
+        android:text="@string/registerSubText"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/regisMainText"
+        app:layout_constraintVertical_bias="0.025" />
 
     <TextView
         android:id="@+id/textoEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Introduce tu dirección de correo electrónico"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/loginGlV2"
+        android:text="@string/registerEmailInput"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/loginGlV1"
-        tools:layout_editor_absoluteY="255dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/textoEmail"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginTop="10dp"
+        app:startIconDrawable="@drawable/baseline_account_circle_24"
+        >
+
+        <EditText
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerInputHint"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textoPsswrd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.012"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintVertical_bias="0.0"
+        android:textSize="15sp"
+        android:text="@string/loginPasswordInputHint"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/textoPsswrd"
+        app:layout_constraintVertical_bias="0.0"
+        app:startIconDrawable="@drawable/baseline_lock_24"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleDrawable="@drawable/baseline_visibility_24">
+
+        <EditText
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerPasswordInputHint"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputConfirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput"
+        app:layout_constraintVertical_bias="0.015"
+        app:passwordToggleDrawable="@drawable/baseline_visibility_24"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/baseline_lock_24">
+
+        <EditText
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/registerConfirmPasswordInputHint"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="288dp"
+        android:text="@string/registerButtonTxt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/registerGlV1"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputConfirmation"
+        app:layout_constraintVertical_bias="0.56" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

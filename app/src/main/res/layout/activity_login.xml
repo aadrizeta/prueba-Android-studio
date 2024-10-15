@@ -23,7 +23,7 @@
         app:layout_constraintGuide_percent="0.15085158" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/loginGlV2"
+        android:id="@+id/registerGlV2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -59,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/loginGlV2"
+        app:layout_constraintEnd_toEndOf="@+id/registerGlV2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginGlV1"
         app:layout_constraintTop_toBottomOf="@+id/loginAppName"
@@ -70,7 +70,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="      Usuario"
+            android:hint="@string/loginUserInputHint"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -80,20 +80,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/loginGlV2"
+        app:layout_constraintEnd_toEndOf="@+id/registerGlV2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginGlV1"
         app:layout_constraintTop_toBottomOf="@+id/loginUsernameTIL"
-        app:startIconDrawable="@drawable/baseline_password_24"
+        app:startIconDrawable="@drawable/baseline_lock_24"
         app:passwordToggleEnabled="true"
-        >
+        app:passwordToggleDrawable="@drawable/baseline_visibility_24">
 
-        <EditText
-
+            <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="      Contraseña"
-            android:inputType="textPersonName" />
+            android:hint="@string/loginPasswordInputHint"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,13 +105,13 @@
         app:layout_constraintTop_toBottomOf="@+id/Password"
         app:icon="@drawable/baseline_login_24"
         android:layout_marginTop="10dp"
-        android:text="Iniciar Sesión"
+        android:text="@string/loginButtonText"
         />
     <TextView
         android:id="@+id/loginRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Todavía no estás registrado?"
+        android:text="@string/loginRegisterLauncher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PasswordButton"
