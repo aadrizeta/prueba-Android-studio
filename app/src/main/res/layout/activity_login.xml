@@ -80,12 +80,13 @@
         android:id="@+id/Password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/loginGlV2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginGlV1"
         app:layout_constraintTop_toBottomOf="@+id/loginUsernameTIL"
         app:startIconDrawable="@drawable/baseline_password_24"
+        app:passwordToggleEnabled="true"
         >
 
         <EditText
@@ -96,5 +97,29 @@
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/PasswordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Password"
+        app:icon="@drawable/baseline_login_24"
+        android:layout_marginTop="10dp"
+        android:text="Iniciar Sesión"
+        />
+    <TextView
+        android:id="@+id/loginRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Todavía no estás registrado?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordButton"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
