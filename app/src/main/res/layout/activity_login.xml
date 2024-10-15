@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15"
-        />
+        app:layout_constraintGuide_percent="0.15085158" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/loginGlV2"
