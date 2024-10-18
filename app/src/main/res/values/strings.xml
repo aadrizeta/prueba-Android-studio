@@ -51,7 +51,7 @@
     <string name="registerEmailInput">Correo electrónico</string>
     <string name="registerLayoutTittle">Crear una cuenta</string>
     <string name="registerSubText">El usuario y la contraseña que elijas servirá para acceder a los servicios de la aplicación.</string>
-    <string name="registerInputHint">Tu email de usuario</string>
+    <string name="registerInputHint">Tu nick de usuario</string>
     <string name="registerPasswordInputHint">Crea tu contraseña</string>
     <string name="registerConfirmPasswordInputHint">Confirma tu contraseña</string>
     <string name="registerButtonTxt">Crear cuenta</string>

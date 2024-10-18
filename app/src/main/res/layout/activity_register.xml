@@ -71,7 +71,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInput"
+        android:id="@+id/registerUserInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,7 +88,7 @@
             android:layout_width="329dp"
             android:layout_height="wrap_content"
             android:hint="@string/registerInputHint"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toStartOf="@+id/registerGlV2"
         app:layout_constraintHorizontal_bias="0.012"
         app:layout_constraintStart_toStartOf="@+id/registerGlV1"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput"
+        app:layout_constraintTop_toBottomOf="@+id/registerUserInput"
         app:layout_constraintVertical_bias="0.0"
         android:textSize="15sp"
         android:text="@string/loginPasswordInputHint"
