@@ -19,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Register extends AppCompatActivity {
 
     private boolean isPasswordVisible = false;
@@ -56,32 +59,28 @@ public class Register extends AppCompatActivity {
                 String stringPassword1 = String.valueOf(password1.getEditText().getText());
                 String stringPassword2 = String.valueOf(password2.getEditText().getText());
 
-                //Comprobar que el usuario y la contraseña no está vacío
-                if (userName.isEmpty() || stringPassword1.isEmpty() || stringPassword2.isEmpty()) {
-                    toast = Toast.makeText(getApplicationContext(), "Completa todos los campos", Toast.LENGTH_SHORT);
-                    if (userName.isEmpty()) {
-                        registerUserInput.setError("Por favor, completa este campo");
-                    }
-                    if (stringPassword1.isEmpty()) {
-                        password1.setError("Por favor, completa este campo");
-                    }
-                    if (stringPassword2.isEmpty()) {
-                        password2.setError("Por favor, completa este campo");
-                    }
+                List<TextInputLayout> registerInputLayouts = new ArrayList<>();
+                registerInputLayouts.add(registerUserInput);
+                registerInputLayouts.add(password1);
+                registerInputLayouts.add(password2);
+
+                if (InputValidator.validateInputs(registerInputLayouts, this)){
+                    //Comprobar que las contraseñas coinciden
+                       if (!stringPassword1.equals(stringPassword2)) {
+                           toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
+                           toast.show();
+                       } else {
+                           SharedPreferences.Editor editor = preferences.edit();
+                           editor.putString("userName", userName);
+                           editor.putString("password", stringPassword1);
+                           editor.apply();
+                           toast = Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
+                           toast.show();
+                           launchLogin();
+                       }
                 } else {
-                    // Comprobar que las contraseñas coinciden
-                    if (!stringPassword1.equals(stringPassword2)) {
-                        toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
-                        toast.show();
-                    } else {
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("userName", userName);
-                        editor.putString("password", stringPassword1);
-                        editor.apply();
-                        toast = Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                        toast.show();
-                        launchLogin();
-                    }
+                    toast = Toast.makeText(getApplicationContext(), "Completa todos los campos", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });

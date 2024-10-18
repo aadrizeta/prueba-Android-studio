@@ -16,9 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Login extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    private boolean isPasswordVisible = false; // Control de visibilidad de la contraseña
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,8 @@ public class Login extends AppCompatActivity {
 
         // Creacion de instancias
         Button loginButton = findViewById(R.id.PasswordButton);
-
         TextView registerTextView = findViewById(R.id.loginRegister);
-
         TextInputLayout userInputLayout = findViewById(R.id.loginUsernameTIL);
-
         TextInputLayout passwordInputLayout = findViewById(R.id.Password);
 
         SharedPreferences sharedPreferences = getSharedPreferences("Registro", MODE_PRIVATE);
@@ -49,23 +47,25 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String user = sharedPreferences.getString("userName", "anonimo");
-                String password = sharedPreferences.getString("password", "contraseña");
-
                 String stringUserNick = String.valueOf(userInputLayout.getEditText().getText());
-
                 String stringUserPassword = String.valueOf(passwordInputLayout.getEditText().getText());
 
-                if (!stringUserNick.equals(user)) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    if (stringUserPassword.equals(password)){
-                        launchMain();
-                    } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Contraseña incorrecta", Toast.LENGTH_SHORT);
+                List <TextInputLayout> loginInputLayouts = new ArrayList<>();
+                loginInputLayouts.add(userInputLayout);
+                loginInputLayouts.add(passwordInputLayout);
+                if (InputValidator.validateInputs(loginInputLayouts, this)){
+                    String user = sharedPreferences.getString("userName", "anonimo");
+                    String password = sharedPreferences.getString("password", "contraseña");
+                    if (!stringUserNick.equals(user)) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT);
                         toast.show();
+                    } else {
+                        if (stringUserPassword.equals(password)){
+                            launchMain();
+                        } else {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Contraseña incorrecta", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }
                 }
             }
