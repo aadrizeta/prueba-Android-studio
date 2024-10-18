@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class Register extends AppCompatActivity {
 
     private boolean isPasswordVisible = false;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,75 +30,79 @@ public class Register extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
+        //Creacion de instancias
         Button registerButton = findViewById(R.id.registerButton);
-
-        TextInputLayout passwordInputLayout = findViewById(R.id.passwordInput);
-        EditText password1 = (EditText) passwordInputLayout.getEditText();
-
-        TextInputLayout passwordInputLayoutConfirmation = findViewById(R.id.passwordInputConfirmation);
-        EditText password2 = (EditText) passwordInputLayoutConfirmation.getEditText();
-
+        TextInputLayout password1 = findViewById(R.id.passwordInput);
+        TextInputLayout password2 = findViewById(R.id.passwordInputConfirmation);
         TextInputLayout registerUserInput = findViewById(R.id.registerUserInput);
 
         SharedPreferences preferences = getSharedPreferences("Registro", Context.MODE_PRIVATE);
 
+        //Validar que los campos no esten vacios
+        validarCampoVacio(password1, "Por favor, completa este campo");
+        validarCampoVacio(password2, "Por favor, completa este campo");
+        validarCampoVacio(registerUserInput, "Por favor, completa este campo");
 
-        //Mostrar contraseña caja1
-        passwordInputLayout.setEndIconOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (isPasswordVisible){
-                    assert password1 != null;
-                    password1.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordInputLayout.setEndIconDrawable(R.drawable.baseline_visibility_24);
-                } else {
-                    assert password1 != null;
-                    password1.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordInputLayout.setEndIconDrawable(R.drawable.baseline_visibility_off_24);
-                }
-                isPasswordVisible = !isPasswordVisible;
-            }
-        });
-
-        //Mostrar contraseña caja2
-        passwordInputLayoutConfirmation.setEndIconOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (isPasswordVisible){
-                    assert password2 != null;
-                    password2.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordInputLayoutConfirmation.setEndIconDrawable(R.drawable.baseline_visibility_24);
-                } else {
-                    assert password2 != null;
-                    password2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordInputLayoutConfirmation.setEndIconDrawable(R.drawable.baseline_visibility_off_24);
-                }
-                isPasswordVisible =!isPasswordVisible;
-            }
-        });
+        //Metodo para mostrar y ocultar las contraseñas
+        cambiarVisibilidadPassword(password1);
+        cambiarVisibilidadPassword(password2);
 
         // Evento Botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              // Obtener el nombre de usuario ingresado
-              String userName = String.valueOf(registerUserInput.getEditText().getText());
-              String stringPassword1 = String.valueOf(passwordInputLayout.getEditText().getText());
-              String stringPassword2 = String.valueOf(passwordInputLayoutConfirmation.getEditText().getText());
-              // Comprobar que las contraseñas coinciden
-              if (!stringPassword1.equals(stringPassword2)){
-                  Toast toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
-                  toast.show();
-              } else {
-                  SharedPreferences.Editor editor = preferences.edit();
-                  editor.putString("userName", userName);
-                  editor.putString("password", stringPassword1);
-                  editor.apply();
-                  Toast toast = Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
-                  toast.show();
-                  launchLogin();
-              }
-          }
+            @Override
+            public void onClick(View view) {
+                // Obtener el nombre de usuario ingresado
+                String userName = String.valueOf(registerUserInput.getEditText().getText());
+                String stringPassword1 = String.valueOf(password1.getEditText().getText());
+                String stringPassword2 = String.valueOf(password2.getEditText().getText());
+
+                //Comprobar que el usuario y la contraseña no está vacío
+                if (userName.isEmpty() || stringPassword1.isEmpty() || stringPassword2.isEmpty()) {
+                    toast = Toast.makeText(getApplicationContext(), "Completa todos los campos", Toast.LENGTH_SHORT);
+                    if (userName.isEmpty()) {
+                        registerUserInput.setError("Por favor, completa este campo");
+                    }
+                    if (stringPassword1.isEmpty()) {
+                        password1.setError("Por favor, completa este campo");
+                    }
+                    if (stringPassword2.isEmpty()) {
+                        password2.setError("Por favor, completa este campo");
+                    }
+                } else {
+                    // Comprobar que las contraseñas coinciden
+                    if (!stringPassword1.equals(stringPassword2)) {
+                        toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("userName", userName);
+                        editor.putString("password", stringPassword1);
+                        editor.apply();
+                        toast = Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT);
+                        toast.show();
+                        launchLogin();
+                    }
+                }
+            }
+        });
+    }
+
+    //Mostrar y ocultar las contraseñas
+    public void cambiarVisibilidadPassword(TextInputLayout layout) {
+        EditText editText = layout.getEditText();
+        layout.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                assert editText != null;
+                if (isPasswordVisible) {
+                    editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    layout.setEndIconDrawable(R.drawable.baseline_visibility_24);
+                } else {
+                    editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    layout.setEndIconDrawable(R.drawable.baseline_visibility_off_24);
+                }
+                isPasswordVisible = !isPasswordVisible;
+            }
         });
     }
 
@@ -105,5 +112,24 @@ public class Register extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    //Metodo para verificar que los campos no esten vacios
+    public void validarCampoVacio(TextInputLayout campo, String mensajeError) {
+        EditText editText = campo.getEditText();
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                campo.setError(charSequence.toString().isEmpty() ? mensajeError : null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 }

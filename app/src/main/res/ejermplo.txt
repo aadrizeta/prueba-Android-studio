@@ -1,0 +1,55 @@
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.textfield.TextInputLayout;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextInputLayout textInputLayout;
+    private EditText editText;
+    private Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textInputLayout = findViewById(R.id.textInputLayout);
+        editText = textInputLayout.getEditText();
+        button = findViewById(R.id.button);
+
+        // Validación en tiempo real a medida que el usuario escribe
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    textInputLayout.setError("Este campo es obligatorio");
+                } else {
+                    textInputLayout.setError(null); // Limpiar el mensaje de error
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        button.setOnClickListener(v -> {
+            if (editText.getText().toString().isEmpty()) {
+                textInputLayout.setError("Este campo es obligatorio");
+            } else {
+                // Si el campo no está vacío, puedes continuar con otras acciones
+                Toast.makeText(this, "Datos válidos", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}

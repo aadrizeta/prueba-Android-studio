@@ -162,7 +162,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/registerGlV1"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputConfirmation"
-        app:layout_constraintVertical_bias="0.178" />
+        app:layout_constraintVertical_bias="0.10" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

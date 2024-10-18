@@ -22,27 +22,34 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Register r = new Register();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        // Referencias a las vistas en activity_login.xml
+        // Creacion de instancias
         Button loginButton = findViewById(R.id.PasswordButton);
+
         TextView registerTextView = findViewById(R.id.loginRegister);
 
         TextInputLayout userInputLayout = findViewById(R.id.loginUsernameTIL);
-        EditText userNick = (EditText) userInputLayout.getEditText();
 
         TextInputLayout passwordInputLayout = findViewById(R.id.Password);
-        EditText userPassword = (EditText) passwordInputLayout.getEditText();
 
         SharedPreferences sharedPreferences = getSharedPreferences("Registro", MODE_PRIVATE);
+
+        //Metodo para mostrar y ocultar la contraseña
+        r.cambiarVisibilidadPassword(passwordInputLayout);
+
+        //Validar que los campos no esten vacios
+        r.validarCampoVacio(userInputLayout, "Por favor, completa este campo");
+        r.validarCampoVacio(passwordInputLayout, "Por favor, completa este campo");
 
         // Listener para el botón de iniciar sesión
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //launchMain();
+
                 String user = sharedPreferences.getString("userName", "anonimo");
                 String password = sharedPreferences.getString("password", "contraseña");
 
@@ -69,23 +76,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 launchRegister();
-            }
-        });
-
-        // Listener para mostrar/ocultar la contraseña al tocar el ícono del TextInputLayout
-        passwordInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPasswordVisible) {
-                    assert userPassword != null;
-                    userPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordInputLayout.setEndIconDrawable(R.drawable.baseline_visibility_24);
-                } else {
-                    assert userPassword != null;
-                    userPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordInputLayout.setEndIconDrawable(R.drawable.baseline_visibility_off_24);
-                }
-                isPasswordVisible = !isPasswordVisible;
             }
         });
     }
