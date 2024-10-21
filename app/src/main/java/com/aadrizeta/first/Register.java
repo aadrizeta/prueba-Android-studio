@@ -4,14 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,7 +18,7 @@ import java.util.List;
 
 public class Register extends AppCompatActivity {
 
-    private boolean isPasswordVisible = false;
+
     private Toast toast;
 
     @Override
@@ -42,22 +36,22 @@ public class Register extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("Registro", Context.MODE_PRIVATE);
 
         //Validar que los campos no esten vacios
-        validarCampoVacio(password1, "Por favor, completa este campo");
-        validarCampoVacio(password2, "Por favor, completa este campo");
-        validarCampoVacio(registerUserInput, "Por favor, completa este campo");
+        InputValidator.matchPassword(password1, password2, "Por favor, completa este campo", "Las contraseñas no coinciden");
+        InputValidator.matchPassword2(password1, password2, "Por favor, completa este campo", "Las contraseñas no coinciden");
+        InputValidator.validarCampoVacio(registerUserInput, "Por favor, completa este campo");
 
         //Metodo para mostrar y ocultar las contraseñas
-        cambiarVisibilidadPassword(password1);
-        cambiarVisibilidadPassword(password2);
+        InputValidator.cambiarVisibilidadPassword(password1);
+        InputValidator.cambiarVisibilidadPassword(password2);
+
+        //Metodo para hacer saber al usuario que las contraseñas coinciden
+        //InputValidator.matchPassword(password1, password2, "Las contraseñas no coinciden");
 
         // Evento Botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Obtener el nombre de usuario ingresado
-                String userName = String.valueOf(registerUserInput.getEditText().getText());
-                String stringPassword1 = String.valueOf(password1.getEditText().getText());
-                String stringPassword2 = String.valueOf(password2.getEditText().getText());
 
                 List<TextInputLayout> registerInputLayouts = new ArrayList<>();
                 registerInputLayouts.add(registerUserInput);
@@ -65,6 +59,9 @@ public class Register extends AppCompatActivity {
                 registerInputLayouts.add(password2);
 
                 if (InputValidator.validateInputs(registerInputLayouts, this)){
+                    String userName = String.valueOf(registerUserInput.getEditText().getText());
+                    String stringPassword1 = String.valueOf(password1.getEditText().getText());
+                    String stringPassword2 = String.valueOf(password2.getEditText().getText());
                     //Comprobar que las contraseñas coinciden
                        if (!stringPassword1.equals(stringPassword2)) {
                            toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT);
@@ -86,49 +83,11 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    //Mostrar y ocultar las contraseñas
-    public void cambiarVisibilidadPassword(TextInputLayout layout) {
-        EditText editText = layout.getEditText();
-        layout.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                assert editText != null;
-                if (isPasswordVisible) {
-                    editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    layout.setEndIconDrawable(R.drawable.baseline_visibility_24);
-                } else {
-                    editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    layout.setEndIconDrawable(R.drawable.baseline_visibility_off_24);
-                }
-                isPasswordVisible = !isPasswordVisible;
-            }
-        });
-    }
-
     // Método para volver al Login
     public void launchLogin() {
         Intent intent = new Intent(Register.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    //Metodo para verificar que los campos no esten vacios
-    public void validarCampoVacio(TextInputLayout campo, String mensajeError) {
-        EditText editText = campo.getEditText();
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                campo.setError(charSequence.toString().isEmpty() ? mensajeError : null);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
     }
 }

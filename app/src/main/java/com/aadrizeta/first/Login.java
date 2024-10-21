@@ -3,11 +3,8 @@ package com.aadrizeta.first;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +34,11 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Registro", MODE_PRIVATE);
 
         //Metodo para mostrar y ocultar la contraseña
-        r.cambiarVisibilidadPassword(passwordInputLayout);
+        InputValidator.cambiarVisibilidadPassword(passwordInputLayout);
 
         //Validar que los campos no esten vacios
-        r.validarCampoVacio(userInputLayout, "Por favor, completa este campo");
-        r.validarCampoVacio(passwordInputLayout, "Por favor, completa este campo");
+        InputValidator.validarCampoVacio(userInputLayout, "Por favor, completa este campo");
+        InputValidator.validarCampoVacio(passwordInputLayout, "Por favor, completa este campo");
 
         // Listener para el botón de iniciar sesión
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -53,14 +50,17 @@ public class Login extends AppCompatActivity {
                 List <TextInputLayout> loginInputLayouts = new ArrayList<>();
                 loginInputLayouts.add(userInputLayout);
                 loginInputLayouts.add(passwordInputLayout);
+
                 if (InputValidator.validateInputs(loginInputLayouts, this)){
-                    String user = sharedPreferences.getString("userName", "anonimo");
-                    String password = sharedPreferences.getString("password", "contraseña");
-                    if (!stringUserNick.equals(user)) {
+
+                    String savedUser = sharedPreferences.getString("userName", "anonimo");
+                    String savedPassword = sharedPreferences.getString("password", "contraseña");
+
+                    if (!stringUserNick.equals(savedUser)) {
                         Toast toast = Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-                        if (stringUserPassword.equals(password)){
+                        if (stringUserPassword.equals(savedPassword)){
                             launchMain();
                         } else {
                             Toast toast = Toast.makeText(getApplicationContext(), "Contraseña incorrecta", Toast.LENGTH_SHORT);
