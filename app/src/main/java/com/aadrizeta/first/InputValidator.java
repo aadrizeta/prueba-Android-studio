@@ -96,6 +96,7 @@ public class InputValidator {
                 if (charSequence.toString().isEmpty()){
                     campo1.setError(mensajeError1);
                 } else {
+                    campo1.setError(null);
                     if (!charSequence.toString().equals(campo2.getEditText().getText().toString())){
                         campo2.setError(mensajeError2);
                     } else {
