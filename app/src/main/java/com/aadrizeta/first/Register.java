@@ -44,9 +44,6 @@ public class Register extends AppCompatActivity {
         InputValidator.cambiarVisibilidadPassword(password1);
         InputValidator.cambiarVisibilidadPassword(password2);
 
-        //Metodo para hacer saber al usuario que las contraseñas coinciden
-        //InputValidator.matchPassword(password1, password2, "Las contraseñas no coinciden");
-
         // Evento Botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
